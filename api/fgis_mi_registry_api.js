@@ -6,8 +6,7 @@ const registryRecords = async (filter_obj) => {
 		const url = getUrl('https://fgis.gost.ru/fundmetrology/api/registry/4/data', filter_obj)
 		const res = await fetch(url)
         const data = await res.json()
-        console.log(data)
-		return data
+		return data.result
 	} catch (err) {
 		console.log('fgis_api.js error!!!')
         console.log(err)
@@ -29,14 +28,14 @@ const getPage = async (page, page_size = 20) => {
 	}
 
 	const data = await registryRecords(filter_obj)
-	/*res_data.total_count = await data.totalCount
+	res_data.total_count = await data.totalCount
 	filter_obj.pageNumber = filter_obj.pageNumber + 1
 
 	for (const [i, item] of data.items.entries()) {
 		res[i] = parseData(item.properties)
 	}
 	res_data.data  = res
-	return res_data*/
+	return res_data
 }
 
 const getValue = (fields, name, link = false) => {
