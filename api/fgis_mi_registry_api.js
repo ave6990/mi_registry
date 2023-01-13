@@ -46,7 +46,8 @@ const getValue = (fields, name, link = false) => {
 		if (link) {
 			return vals[0].link
 		} else {
-			return vals[0].value
+			return Array.isArray(vals[0].value) ? vals[0].value.join(';') : vals[0].value
+            // return vals[0].value
 		}
 	} else {
 		return undefined

@@ -13,8 +13,9 @@ const readData = async (page_size = 20, start_page = 1) => {
 	let res = []
 	for (let i = start_page; i <= last_page; i++) {
 		const data = await getPage(i, page_size)
+        console.log(data)
 		if (i == start_page) {
-            fs.writeFileSync(file_name, Object.keys(data.data[0]).join(','))
+            fs.writeFileSync(file_name, Object.keys(data.data[0]).join(';').concat('\r\n'))
 			last_page = parseInt(data.total_count / page_size) + 1
 		}
 		let percent = Math.round(parseFloat(i / last_page) * 10000) / 100
@@ -25,10 +26,10 @@ const readData = async (page_size = 20, start_page = 1) => {
 }
 
 const writeData = (data) => {
-    const replacer = (key, value) => value === null ? '' : value
+    const replacer = (key, value) => value === null ? 'null' : value
     const header = Object.keys(data[0])
     const csv = [
-      ...data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+      ...data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
     ].join('\r\n')
 
     fs.appendFileSync(file_name, csv)
