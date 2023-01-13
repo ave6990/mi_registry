@@ -1,10 +1,10 @@
-import axios 'axios'
-import * as urlLib from '../lib/url.js'
-import * as dateLib '../lib/date.js'
+import axios from 'axios'
+import { getUrl } from '../lib/url.js'
+import { toDate } from '../lib/date.js'
 
 const registryRecords = async (filter_obj) => {
 	try {
-		const url = urlLib.getUrl('https://fgis.gost.ru/fundmetrology/api/registry/4/data', filter_obj)
+		const url = getUrl('https://fgis.gost.ru/fundmetrology/api/registry/4/data', filter_obj)
 		const res = await axios.get(url)
 		return res.data.result
 	} catch (err) {
@@ -100,7 +100,7 @@ const parseData = (fields) => {
 				fgis_manufacturer_fields)
 		} else if (field.name == 'foei:date' || field.name == 'foei:CertificateLifeSI') {
 			let str = getValue(fields, field.name)
-			data[data_fields[field.name]] = dateLib.toDate(str)
+			data[data_fields[field.name]] = toDate(str)
 		} else if (['foei:DescriptionSI', 'foei:MethodVerifSI'].indexOf(field.name) >= 0) {
 			data[data_fields[field.name]] = getValue(fields, field.name, true)
 		} else {

@@ -1,11 +1,6 @@
 // This script let download the mesurement instsrument database from FIF.
 
-import mongoose from 'mongoose'
-import { MIRegistry } from '../models/mi_registry.js'
-import { getPage } from '../api/fgis_mi_registry_api.js'
-import * as config from '../config.js'
-
-mongoose.connect(config.db.uri, config.db.options)
+import { getPage } from './api/fgis_mi_registry_api.js'
 
 const readData = async (page_size = 20) => {
 	let last_page = 3
@@ -22,21 +17,10 @@ const readData = async (page_size = 20) => {
 	return true
 }
 
-const writeData = (in_data) => {
-	MIRegistry.insertMany(in_data, (err, data) => {
-		let message = ''
-
-		if (err) {
-			message = 'Error!!!'
-			console.log(err)
-		} else {
-			message = 'Successfull saved to database!'
-		}
-		console.log(message)
-	} )
+const writeData = (data) => {
+    console.log(data)
 }
 
-readData(500)
-//mongoose.connection.close()
+readData()
 
 export { readData, writeData }
