@@ -9,7 +9,7 @@ const cur_date = toString(d, '-', true)
 const file_name = `registry_${cur_date}.csv`
 
 const readData = async (page_size = 20, start_page = 1) => {
-	let last_page = 3
+	let last_page = 9999999
 	let res = []
 	for (let i = start_page; i <= last_page; i++) {
 		const data = await getPage(i, page_size)
@@ -34,6 +34,6 @@ const writeData = (data) => {
     fs.appendFileSync(file_name, csv)
 }
 
-readData()
+readData(500, 1)
 
 export { readData, writeData }

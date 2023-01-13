@@ -56,7 +56,7 @@ const getValue = (fields, name, link = false) => {
 const getObjects = (value, data_fields, fgis_fields) => {
 	let manufacturer_obj = []
 	for (const [i, fields] of value.entries()) {
-		obj = {}
+		let obj = {}
 		for (const [i, field] of data_fields.entries()) {
 			obj[field] = getValue(fields.fields, fgis_fields[i])
 		}
