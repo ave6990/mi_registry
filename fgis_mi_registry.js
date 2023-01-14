@@ -34,6 +34,6 @@ const writeData = (data) => {
     fs.appendFileSync(file_name, csv)
 }
 
-readData(500, 6)
+readData(500, 1)
 
 export { readData, writeData }
