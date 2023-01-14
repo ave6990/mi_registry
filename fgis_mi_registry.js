@@ -13,7 +13,6 @@ const readData = async (page_size = 20, start_page = 1) => {
 	let res = []
 	for (let i = start_page; i <= last_page; i++) {
 		const data = await getPage(i, page_size)
-        console.log(data)
 		if (i == start_page) {
             fs.writeFileSync(file_name, Object.keys(data.data[0]).join(';').concat('\r\n'))
 			last_page = parseInt(data.total_count / page_size) + 1
@@ -35,6 +34,6 @@ const writeData = (data) => {
     fs.appendFileSync(file_name, csv)
 }
 
-readData(500, 1)
+readData(500, 6)
 
 export { readData, writeData }

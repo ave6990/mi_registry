@@ -46,8 +46,8 @@ const getValue = (fields, name, link = false) => {
 		if (link) {
 			return vals[0].link
 		} else {
-			return Array.isArray(vals[0].value) ? vals[0].value.join(';') : vals[0].value
-            // return vals[0].value
+			// return Array.isArray(vals[0].value) ? vals[0].value.join(';') : vals[0].value
+            return vals[0].value
 		}
 	} else {
 		return undefined
@@ -56,14 +56,16 @@ const getValue = (fields, name, link = false) => {
 
 const getObjects = (value, data_fields, fgis_fields) => {
 	let manufacturer_obj = []
+
 	for (const [i, fields] of value.entries()) {
 		let obj = {}
 		for (const [i, field] of data_fields.entries()) {
 			obj[field] = getValue(fields.fields, fgis_fields[i])
 		}
-		manufacturer_obj[i] = obj
+		manufacturer_obj[i] = Object.values(obj).join(', ')
 	}
-	return manufacturer_obj
+
+	return manufacturer_obj.join(';')
 }
 
 const parseData = (fields) => {
