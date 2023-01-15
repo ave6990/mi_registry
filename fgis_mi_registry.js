@@ -30,6 +30,7 @@ const writeData = (data) => {
     const csv = [
       ...data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
     ].join('\r\n')
+    csv[csv.length - 1].concat('\r\n')
 
     fs.appendFileSync(file_name, csv)
 }
