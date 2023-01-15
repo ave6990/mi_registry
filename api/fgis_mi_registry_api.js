@@ -98,19 +98,24 @@ const parseData = (fields) => {
 	const fgis_manufacturer_fields = ['foei:CountrySI', 'foei:SettlementSI',
 		'foei:UvedSI', 'foei:ManufacturerSI']
 	for( const field of fields) {
-		if (field.name == 'foei:SI2_assoc') {
-			let manufacturer = getValue(fields, field.name)
-			data[data_fields[field.name]] = getObjects(manufacturer, data_manufacturer_fields,
-				fgis_manufacturer_fields)
-		} else if (field.name == 'foei:date' || field.name == 'foei:CertificateLifeSI') {
-			let str = getValue(fields, field.name)
-			data[data_fields[field.name]] = toDate(str)
-		} else if (['foei:DescriptionSI', 'foei:MethodVerifSI'].indexOf(field.name) >= 0) {
-			data[data_fields[field.name]] = getValue(fields, field.name, true)
-		} else {
-			data[data_fields[field.name]] = getValue(fields, field.name)
-		}
+        if (Object.keys(data_fields).includes(field.name)) {
+            if (field.name == 'foei:SI2_assoc') {
+                let manufacturer = getValue(fields, field.name)
+                data[data_fields[field.name]] = getObjects(manufacturer, data_manufacturer_fields,
+                    fgis_manufacturer_fields)
+            } else if (field.name == 'foei:date' || field.name == 'foei:CertificateLifeSI') {
+                let str = getValue(fields, field.name)
+                data[data_fields[field.name]] = toDate(str)
+            } else if (['foei:DescriptionSI', 'foei:MethodVerifSI'].indexOf(field.name) >= 0) {
+                data[data_fields[field.name]] = getValue(fields, field.name, true)
+            } else {
+                data[data_fields[field.name]] = getValue(fields, field.name)
+            }
+        } else {
+            data[field] = 'null'
+        }
 	}
+
 	return data
 }
 
