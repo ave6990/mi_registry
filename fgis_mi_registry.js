@@ -53,9 +53,17 @@ const readData = async (page_size = 20, start_page = 1) => {
 }
 
 const packData = (data, data_fields) => {
-    const replacer = (key, value) => (value === null || value == '') ? 'null' : value
+    const replacer = (key, value) => {
+        if (value === null || value == '') {
+            return 'null'
+        } else if (Array.isArray(value)) {
+            return value.join('|')
+        } else {
+            return value
+        }
+    }
     const csv = [
-      ...data.map(row => data_fields.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+        ...data.map(row => data_fields.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
     ].join('\r\n')
 
     return csv.concat('\r\n')

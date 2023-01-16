@@ -64,7 +64,7 @@ const getObjects = (value, data_fields, fgis_fields) => {
 		manufacturer_obj[i] = Object.values(obj).join(', ')
 	}
 
-	return manufacturer_obj.join(';')
+	return manufacturer_obj.join('|')
 }
 
 const parseData = (fields) => {
