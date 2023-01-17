@@ -61,7 +61,7 @@ const getObjects = (value, data_fields, fgis_fields) => {
 		for (const [i, field] of data_fields.entries()) {
 			obj[field] = getValue(fields.fields, fgis_fields[i])
 		}
-		manufacturer_obj[i] = Object.values(obj).join(', ')
+		manufacturer_obj[i] = Object.values(obj).join('|')
 	}
 
 	return manufacturer_obj.join('|')
